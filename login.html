@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UNISYSTEM • Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg:           #f0f4f8;
+      --bg-2:         #e8eef5;
+      --surface:      #ffffff;
+      --surface-2:    #f7f9fc;
+      --line:         #dde4ed;
+      --line-2:       #c8d4e2;
+      --text:         #2c3a4e;
+      --text-dim:     #7a8fa8;
+      --text-bright:  #1a2535;
+      --accent:       #3b82f6;
+      --accent-dim:   #93c5fd;
+      --accent-glow:  rgba(59,130,246,0.12);
+      --accent-border:rgba(59,130,246,0.3);
+      --accent-soft:  #eff6ff;
+      --teal:         #0ea5a0;
+      --red:          #ef4444;
+      --green:        #22c55e;
+      --font-head:    'Raleway', sans-serif;
+      --font-mono:    'Fira Code', monospace;
+      --font-body:    'Nunito', sans-serif;
+      --radius-sm:    4px;
+      --radius-md:    8px;
+      --radius-lg:    12px;
+      --radius-xl:    16px;
+      --radius-full:  9999px;
+      --shadow-sm:    0 1px 3px rgba(44,58,78,0.08), 0 1px 2px rgba(44,58,78,0.04);
+      --shadow-md:    0 4px 16px rgba(44,58,78,0.10), 0 2px 6px rgba(44,58,78,0.06);
+      --shadow-lg:    0 12px 40px rgba(44,58,78,0.13), 0 4px 12px rgba(44,58,78,0.07);
+    }
+    body.dark {
+      --bg:           #0f172a;
+      --bg-2:         #1e293b;
+      --surface:      #1e293b;
+      --surface-2:    #334155;
+      --line:         #334155;
+      --line-2:       #475569;
+      --text:         #e2e8f0;
+      --text-dim:     #94a3b8;
+      --text-bright:  #f1f5f9;
+      --accent:       #34d399;
+      --accent-dim:   #6ee7b7;
+      --accent-glow:  rgba(52,211,153,0.15);
+      --accent-border:rgba(52,211,153,0.3);
+      --accent-soft:  rgba(52,211,153,0.1);
+      --teal:         #2dd4bf;
+      --red:          #f87171;
+      --green:        #4ade80;
+      --shadow-sm:    0 1px 3px rgba(0,0,0,0.3);
+      --shadow-md:    0 4px 16px rgba(0,0,0,0.4);
+      --shadow-lg:    0 12px 40px rgba(0,0,0,0.5);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    /* Fundo e partículas (igual ao original, apenas com suporte a dark) */
+    .gradient-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background: radial-gradient(ellipse 70% 50% at 10% 10%, rgba(59,130,246,0.07) 0%, transparent 60%),
+                  radial-gradient(ellipse 50% 40% at 90% 90%, rgba(14,165,160,0.06) 0%, transparent 60%),
+                  radial-gradient(ellipse 40% 35% at 80% 10%, rgba(99,102,241,0.05) 0%, transparent 55%),
+                  var(--bg);
+    }
+    body.dark .gradient-bg {
+      background: radial-gradient(ellipse 70% 50% at 10% 10%, rgba(52,211,153,0.1) 0%, transparent 60%),
+                  radial-gradient(ellipse 50% 40% at 90% 90%, rgba(45,212,191,0.08) 0%, transparent 60%),
+                  radial-gradient(ellipse 40% 35% at 80% 10%, rgba(96,165,250,0.06) 0%, transparent 55%),
+                  var(--bg);
+    }
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image: radial-gradient(circle, rgba(59,130,246,0.15) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: radial-gradient(ellipse 90% 80% at 50% 50%, black 20%, transparent 100%);
+      pointer-events: none;
+    }
+    body.dark .grid-bg { background-image: radial-gradient(circle, rgba(52,211,153,0.2) 1px, transparent 1px); }
+    .deco-shapes {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .deco-shapes::before {
+      content: '';
+      position: absolute;
+      top: -120px;
+      right: -120px;
+      width: 480px;
+      height: 480px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(14,165,160,0.05));
+      border: 1px solid rgba(59,130,246,0.12);
+    }
+    body.dark .deco-shapes::before {
+      background: linear-gradient(135deg, rgba(52,211,153,0.12), rgba(45,212,191,0.08));
+      border-color: rgba(52,211,153,0.2);
+    }
+    .deco-shapes::after {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      left: -80px;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(14,165,160,0.06), rgba(59,130,246,0.04));
+      border: 1px solid rgba(14,165,160,0.10);
+    }
+    body.dark .deco-shapes::after {
+      background: linear-gradient(135deg, rgba(45,212,191,0.1), rgba(52,211,153,0.06));
+      border-color: rgba(45,212,191,0.15);
+    }
+    .particles {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .particle {
+      position: absolute;
+      background: rgba(59,130,246,0.15);
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(59,130,246,0.25);
+      animation: floatParticle infinite linear;
+    }
+    body.dark .particle {
+      background: rgba(52,211,153,0.2);
+      border-color: rgba(52,211,153,0.3);
+    }
+    @keyframes floatParticle {
+      0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.6; }
+      90%  { opacity: 0.6; }
+      100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+    }
+
+    /* Splash screen */
+    .logo-screen {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(ellipse at 50% 50%, #eef3fa, var(--bg) 80%);
+      z-index: 100;
+      transition: opacity 1.2s cubic-bezier(0.2,0,0,1), transform 1.2s, visibility 1.2s;
+    }
+    body.dark .logo-screen { background: radial-gradient(ellipse at 50% 50%, #1e293b, var(--bg) 80%); }
+    .logo-screen.hidden {
+      opacity: 0;
+      transform: scale(0.95) translateY(-20px);
+      visibility: hidden;
+    }
+    .logo-wrap {
+      position: relative;
+      padding: 60px 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .spark {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(200px 120px at var(--x,50%) 50%, rgba(59,130,246,0.12), transparent 70%),
+                  radial-gradient(240px 160px at 30% 60%, rgba(14,165,160,0.08), transparent 70%);
+      pointer-events: none;
+      filter: blur(25px);
+      animation: moveSpark 12s ease-in-out infinite;
+    }
+    body.dark .spark {
+      background: radial-gradient(200px 120px at var(--x,50%) 50%, rgba(52,211,153,0.2), transparent 70%),
+                  radial-gradient(240px 160px at 30% 60%, rgba(45,212,191,0.15), transparent 70%);
+    }
+    @keyframes moveSpark { 0%,100% { --x:15%; } 50% { --x:85%; } }
+    .logo-svg {
+      width: min(900px,85vw);
+      height: auto;
+      filter: drop-shadow(0 0 30px rgba(59,130,246,0.18));
+    }
+    body.dark .logo-svg { filter: drop-shadow(0 0 30px rgba(52,211,153,0.25)); }
+    #stroke {
+      fill: none;
+      stroke: url(#grad);
+      stroke-width: 2.8;
+      stroke-dasharray: 1200;
+      stroke-dashoffset: 1200;
+      animation: drawStroke 2.8s cubic-bezier(0.2,0.6,0.4,1) forwards;
+    }
+    @keyframes drawStroke { to { stroke-dashoffset: 0; } }
+    #fill {
+      fill: url(#grad);
+      filter: url(#glowSoft);
+      opacity: 0;
+      animation: fadeFill 1.2s ease forwards 2.2s;
+    }
+    @keyframes fadeFill { to { opacity: 1; } }
+    .tagline {
+      margin-top: 24px;
+      letter-spacing: 0.5em;
+      font-size: clamp(11px,2vw,13px);
+      text-transform: uppercase;
+      color: var(--text-dim);
+      font-weight: 500;
+      opacity: 0;
+      animation: fadeInTag 1s ease forwards 2.8s;
+      font-family: var(--font-mono);
+    }
+    @keyframes fadeInTag { to { opacity: 0.8; } }
+
+    /* Container e card */
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .login-card {
+      position: relative;
+      width: min(440px, 92vw);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 40px 36px;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      z-index: 10;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: cardAppear 0.6s cubic-bezier(0.2,0,0,1) 0.2s forwards;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    .login-card:hover {
+      border-color: var(--accent-dim);
+      transform: translateY(-3px);
+      box-shadow: 0 20px 60px rgba(44,58,78,0.14), 0 6px 20px rgba(59,130,246,0.08);
+    }
+    body.dark .login-card:hover {
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 6px 20px rgba(52,211,153,0.15);
+    }
+    @keyframes cardAppear { to { opacity: 1; transform: translateY(0); } }
+    .login-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--teal));
+      border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+      opacity: 0.8;
+    }
+    .login-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 120px;
+      background: linear-gradient(180deg, rgba(59,130,246,0.04) 0%, transparent 100%);
+      pointer-events: none;
+      border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    }
+    body.dark .login-card::after {
+      background: linear-gradient(180deg, rgba(52,211,153,0.08) 0%, transparent 100%);
+    }
+
+    /* Cabeçalho e campos */
+    .brand-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .brand-icon {
+      width: 52px;
+      height: 52px;
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 22px;
+      transition: all 0.3s;
+    }
+    .brand-text { flex: 1; }
+    .brand-title {
+      font-size: 26px;
+      font-weight: 800;
+      font-family: var(--font-head);
+      color: var(--text-bright);
+      margin-bottom: 3px;
+    }
+    .brand-subtitle {
+      font-size: 11px;
+      color: var(--text-dim);
+      font-weight: 500;
+      font-family: var(--font-mono);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--line), transparent);
+      margin-bottom: 28px;
+    }
+    .form-title { margin-bottom: 26px; }
+    .form-title h2 {
+      font-size: 19px;
+      font-weight: 700;
+      font-family: var(--font-head);
+      color: var(--text-bright);
+      margin-bottom: 6px;
+    }
+    .form-title p {
+      font-size: 13.5px;
+      color: var(--text-dim);
+    }
+    .alert {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      margin-bottom: 22px;
+      background: rgba(239,68,68,0.07);
+      border: 1px solid rgba(239,68,68,0.20);
+      color: var(--red);
+      font-size: 13.5px;
+      animation: slideDown 0.3s;
+      font-family: var(--font-mono);
+    }
+    body.dark .alert { background: rgba(239,68,68,0.15); }
+    @keyframes slideDown {
+      from { opacity:0; transform:translateY(-10px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* Input group com floating label e toggle de senha sem quebrar estrutura */
+    .input-group {
+      position: relative;
+      margin-bottom: 18px;
+    }
+    .input-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      color: var(--text-dim);
+      transition: color 0.2s;
+      z-index: 1;
+      font-size: 14px;
+    }
+    .input-field {
+      width: 100%;
+      padding: 15px 45px 15px 48px;  /* espaço à direita para o botão toggle */
+      background: var(--surface-2);
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius-md);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 14.5px;
+      font-weight: 500;
+      transition: all 0.25s;
+    }
+    .input-field:hover {
+      background: var(--surface);
+      border-color: var(--line-2);
+    }
+    .input-field:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: var(--surface);
+      box-shadow: 0 0 0 4px rgba(59,130,246,0.10);
+    }
+    body.dark .input-field:focus { box-shadow: 0 0 0 4px rgba(52,211,153,0.2); }
+    .input-field:focus + .input-icon { color: var(--accent); }
+
+    /* Floating label */
+    .input-label {
+      position: absolute;
+      left: 48px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14.5px;
+      color: var(--text-dim);
+      pointer-events: none;
+      transition: all 0.2s ease;
+      padding: 0 4px;
+      font-family: var(--font-body);
+      font-weight: 500;
+    }
+    .input-field:focus + .input-icon + .input-label,
+    .input-field:not(:placeholder-shown) + .input-icon + .input-label {
+      top: 0;
+      left: 14px;
+      font-size: 11.5px;
+      background: var(--surface);
+      padding: 0 6px;
+      color: var(--accent);
+      border-radius: var(--radius-sm);
+      transform: translateY(-50%);
+      font-family: var(--font-mono);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+
+    /* Botão de toggle de senha (posicionado dentro do .input-group, sem alterar a ordem dos elementos) */
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      padding: 6px;
+      border-radius: var(--radius-sm);
+      transition: all 0.2s;
+      z-index: 2;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .toggle-password:hover {
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    /* Botão de login */
+    .btn-login {
+      width: 100%;
+      margin-top: 8px;
+      padding: 15px 24px;
+      background: linear-gradient(135deg, var(--accent), #2563eb);
+      border: none;
+      border-radius: var(--radius-md);
+      color: #fff;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: var(--font-head);
+      box-shadow: 0 4px 16px rgba(59,130,246,0.30);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    body.dark .btn-login { background: linear-gradient(135deg, var(--accent), #059669); box-shadow: 0 4px 16px rgba(52,211,153,0.3); }
+    .btn-login::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    .btn-login:hover {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(59,130,246,0.38);
+    }
+    body.dark .btn-login:hover { background: linear-gradient(135deg, #059669, #047857); }
+    .btn-login:hover::before { left: 100%; }
+    .btn-login:active { transform: translateY(0); }
+
+    /* Links e footer */
+    .support-links {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 22px;
+      font-size: 13px;
+    }
+    .link {
+      color: var(--text-dim);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      position: relative;
+      transition: color 0.2s;
+    }
+    .link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1.5px;
+      background: var(--accent);
+      transition: width 0.2s;
+    }
+    .link:hover { color: var(--accent); }
+    .link:hover::after { width: 100%; }
+    .login-footer {
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      font-size: 11.5px;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+    }
+    .security-badge { display: flex; align-items: center; gap: 6px; }
+    .security-badge i { color: var(--teal); }
+
+    /* Botão de tema */
+    .topbar-theme {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 200;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-full);
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: all 0.2s;
+      box-shadow: var(--shadow-sm);
+    }
+    .topbar-theme:hover {
+      transform: scale(1.05);
+      border-color: var(--accent-border);
+      background: var(--accent-soft);
+    }
+    .topbar-theme i { font-size: 1.2rem; color: var(--accent); }
+
+    /* Modal de recuperação */
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(240,244,248,0.75);
+      backdrop-filter: blur(10px);
+      z-index: 300;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+    }
+    body.dark .modal { background: rgba(15,23,42,0.85); }
+    .modal:not(.hidden) { opacity: 1; visibility: visible; }
+    .modal.hidden { display: none; }
+    .modal-card {
+      width: min(480px, 92vw);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(20px) scale(0.98);
+      opacity: 0;
+      transition: all 0.4s;
+    }
+    .modal:not(.hidden) .modal-card { transform: translateY(0) scale(1); opacity: 1; }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 26px;
+    }
+    .modal-title { display: flex; align-items: center; gap: 12px; }
+    .modal-title i {
+      width: 42px;
+      height: 42px;
+      background: var(--accent-soft);
+      border: 1.5px solid var(--accent-border);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 18px;
+    }
+    .modal-title h3 { font-size: 18px; font-weight: 700; font-family: var(--font-head); color: var(--text-bright); }
+    .modal-close {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--line);
+      background: var(--surface-2);
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .modal-close:hover { border-color: rgba(239,68,68,0.4); color: var(--red); background: rgba(239,68,68,0.06); }
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 26px;
+    }
+    .step {
+      width: 30px;
+      height: 30px;
+      border-radius: var(--radius-md);
+      background: var(--surface-2);
+      border: 1.5px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      transition: all 0.3s;
+    }
+    .step.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 0 4px rgba(59,130,246,0.15);
+    }
+    body.dark .step.active { box-shadow: 0 0 0 4px rgba(52,211,153,0.25); }
+    .step-line { flex: 1; height: 2px; background: var(--line); border-radius: var(--radius-full); }
+    .btn-group { display: flex; gap: 12px; margin-top: 26px; }
+    .btn {
+      flex: 1;
+      padding: 13px 18px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--font-head);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--line);
+      color: var(--text);
+    }
+    .btn-outline:hover { background: var(--surface-2); transform: translateY(-1px); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #2563eb);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(59,130,246,0.28);
+    }
+    body.dark .btn-primary { background: linear-gradient(135deg, var(--accent), #059669); }
+    .btn-primary:hover { background: linear-gradient(135deg, #2563eb, #1d4ed8); transform: translateY(-2px); }
+    body.dark .btn-primary:hover { background: linear-gradient(135deg, #059669, #047857); }
+    .msg {
+      margin-top: 18px;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      animation: slideIn 0.3s;
+      font-family: var(--font-mono);
+    }
+    .msg.success { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.25); color: #16a34a; }
+    body.dark .msg.success { background: rgba(52,211,153,0.15); border-color: rgba(52,211,153,0.3); color: #4ade80; }
+    .msg.error { background: rgba(239,68,68,0.07); border: 1px solid rgba(239,68,68,0.22); color: var(--red); }
+    @keyframes slideIn {
+      from { opacity:0; transform:translateY(8px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .shake { animation: shake 0.4s cubic-bezier(0.36,0.07,0.19,0.97) both; }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      10%,30%,50%,70%,90% { transform: translateX(-5px); }
+      20%,40%,60%,80% { transform: translateX(5px); }
+    }
+    .loading {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: var(--radius-full);
+      border-top-color: #fff;
+      animation: spin 0.6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 480px) {
+      .logo-wrap { padding: 40px 20px; }
+      .login-card { padding: 32px 22px; }
+      .brand-icon { width: 46px; height: 46px; font-size: 20px; }
+      .brand-title { font-size: 22px; }
+      .support-links { flex-direction: column; gap: 10px; align-items: flex-start; }
+      .modal-card { padding: 24px 18px; }
+      .btn-group { flex-direction: column; }
+      .topbar-theme { top: 12px; right: 12px; width: 38px; height: 38px; }
+    }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-2); }
+    ::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: var(--radius-full); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent-dim); }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <div class="gradient-bg"></div>
+  <div class="grid-bg"></div>
+  <div class="deco-shapes"></div>
+  <div class="particles" id="particles"></div>
+
+  <!-- Botão de tema -->
+  <div class="topbar-theme" id="themeToggle">
+    <i class="fas fa-moon"></i>
+  </div>
+
+  <!-- Splash screen -->
+  <div class="logo-screen" id="logoScreen">
+    <div class="logo-wrap">
+      <div class="spark" aria-hidden="true"></div>
+      <svg class="logo-svg" viewBox="0 0 1100 220">
+        <defs>
+          <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#3b82f6">
+              <animate attributeName="stop-color" values="#3b82f6;#0ea5a0;#3b82f6" dur="8s" repeatCount="indefinite"/>
+            </stop>
+            <stop offset="50%" stop-color="#0ea5a0">
+              <animate attributeName="stop-color" values="#0ea5a0;#3b82f6;#0ea5a0" dur="8s" repeatCount="indefinite"/>
+            </stop>
+            <stop offset="100%" stop-color="#3b82f6">
+              <animate attributeName="stop-color" values="#3b82f6;#0ea5a0;#3b82f6" dur="8s" repeatCount="indefinite"/>
+            </stop>
+            <animate attributeName="x1" values="0%;20%;0%" dur="10s" repeatCount="indefinite"/>
+            <animate attributeName="x2" values="100%;80%;100%" dur="10s" repeatCount="indefinite"/>
+          </linearGradient>
+          <filter id="glow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <filter id="glowSoft"><feGaussianBlur stdDeviation="1.8" result="blur"/><feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.9 0"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <text id="stroke" x="50%" y="58%" text-anchor="middle" style="font-weight:700;font-size:140px;font-family:'Raleway','DM Mono',system-ui;letter-spacing:0.03em;">UNI<tspan style="font-weight:600;">SYSTEM</tspan></text>
+        <text id="fill" x="50%" y="58%" text-anchor="middle" style="font-weight:700;font-size:140px;font-family:'Raleway','DM Mono',system-ui;letter-spacing:0.03em;">UNI<tspan style="font-weight:600;">SYSTEM</tspan></text>
+      </svg>
+      <div class="tagline">SOFTWARE • GESTÃO • RESULTADOS</div>
+    </div>
+  </div>
+
+  <!-- Card de login -->
+  <div class="container">
+    <div class="login-card">
+      <div class="brand-header">
+        <div class="brand-icon"><i class="fas fa-cube"></i></div>
+        <div class="brand-text"><div class="brand-title">UNISYSTEM</div><div class="brand-subtitle">GESTÃO INTEGRADA</div></div>
+      </div>
+      <div class="divider"></div>
+      <div class="form-title"><h2>Bem-vindo de volta</h2><p>Faça login para acessar sua conta</p></div>
+      <div class="alert" id="errorAlert" style="display:none;"><i class="fas fa-exclamation-circle"></i><span id="errorMessage"></span></div>
+      <form method="POST" action="/login" id="loginForm">
+        <div class="input-group">
+          <input class="input-field" type="text" name="usuario" id="usuario" placeholder=" " autocomplete="username" required>
+          <i class="fas fa-user input-icon"></i>
+          <label class="input-label" for="usuario">Usuário</label>
+        </div>
+        <div class="input-group">
+          <input class="input-field" type="password" name="senha" id="senha" placeholder=" " autocomplete="current-password" required>
+          <i class="fas fa-lock input-icon"></i>
+          <label class="input-label" for="senha">Senha</label>
+          <!-- Botão toggle será inserido aqui via JavaScript, sem quebrar a estrutura -->
+        </div>
+        <button class="btn-login" type="submit" id="btnLogin"><span>Acessar sistema</span><i class="fas fa-arrow-right"></i></button>
+      </form>
+      <div class="support-links">
+        <a href="#" class="link" id="openForgot"><i class="fas fa-key"></i> Esqueceu a senha?</a>
+        <a href="#" class="link" id="helpLink"><i class="fas fa-question-circle"></i> Precisa de ajuda?</a>
+      </div>
+      <div class="login-footer">
+        <span>© 2026 UNISYSTEM</span>
+        <div class="security-badge"><i class="fas fa-shield-alt"></i><span>CONEXÃO SEGURA</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de recuperação -->
+  <div id="forgotModal" class="modal hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title"><i class="fas fa-key"></i><h3>Recuperar senha</h3></div>
+        <button class="modal-close" id="closeForgot"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="step-indicator"><div class="step active" id="step1Indicator">1</div><div class="step-line"></div><div class="step" id="step2Indicator">2</div></div>
+      <form id="forgotForm">
+        <div id="step1Content">
+          <div class="input-group">
+            <input class="input-field" type="text" name="usuario" id="forgotUsuario" placeholder=" " autocomplete="off" required>
+            <i class="fas fa-user input-icon"></i>
+            <label class="input-label" for="forgotUsuario">Seu usuário</label>
+          </div>
+          <div class="input-group">
+            <input class="input-field" type="password" name="palavra_chave" id="palavraChave" placeholder=" " autocomplete="off" required>
+            <i class="fas fa-shield input-icon"></i>
+            <label class="input-label" for="palavraChave">Palavra-chave</label>
+          </div>
+        </div>
+        <div id="step2Content" class="hidden">
+          <div class="input-group">
+            <input class="input-field" type="password" name="nova_senha" id="novaSenha" placeholder=" " autocomplete="new-password" disabled>
+            <i class="fas fa-lock input-icon"></i>
+            <label class="input-label" for="novaSenha">Nova senha</label>
+          </div>
+          <div class="input-group">
+            <input class="input-field" type="password" name="confirma" id="confirmaSenha" placeholder=" " autocomplete="new-password" disabled>
+            <i class="fas fa-check-circle input-icon"></i>
+            <label class="input-label" for="confirmaSenha">Confirmar senha</label>
+          </div>
+          <div style="margin-top:10px;font-size:12px;color:var(--text-dim);font-family:var(--font-mono);"><i class="fas fa-info-circle" style="color:var(--accent);margin-right:4px;"></i>Mínimo de 4 caracteres</div>
+        </div>
+        <div class="btn-group"><button type="button" class="btn btn-outline" id="cancelForgot"><i class="fas fa-times"></i> Cancelar</button><button type="submit" class="btn btn-primary" id="btnForgot"><span>Continuar</span><i class="fas fa-arrow-right"></i></button></div>
+        <div class="msg" id="forgotMsg"></div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // Partículas
+      const particlesContainer = document.getElementById('particles');
+      const count = window.innerWidth < 768 ? 8 : 14;
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement('div');
+        p.classList.add('particle');
+        const size = Math.random() * 5 + 2;
+        p.style.width = size + 'px';
+        p.style.height = size + 'px';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDuration = Math.random() * 20 + 15 + 's';
+        p.style.animationDelay = Math.random() * 10 + 's';
+        p.style.opacity = Math.random() * 0.4 + 0.1;
+        particlesContainer.appendChild(p);
+      }
+
+      // Splash
+      const logoScreen = document.getElementById('logoScreen');
+      setTimeout(() => logoScreen.classList.add('hidden'), 1200);
+
+      // Toggle de senha – SEM QUEBRAR A ESTRUTURA DOM
+      function attachPasswordToggle(inputGroup) {
+        const input = inputGroup.querySelector('.input-field[type="password"]');
+        if (!input) return;
+        if (inputGroup.querySelector('.toggle-password')) return; // já existe
+
+        const toggleBtn = document.createElement('button');
+        toggleBtn.type = 'button';
+        toggleBtn.className = 'toggle-password';
+        toggleBtn.innerHTML = '<i class="fas fa-eye"></i>';
+        toggleBtn.title = 'Mostrar senha';
+        toggleBtn.setAttribute('tabindex', '-1');
+        toggleBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+          input.setAttribute('type', type);
+          toggleBtn.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+          toggleBtn.title = type === 'password' ? 'Mostrar senha' : 'Ocultar senha';
+        });
+        inputGroup.appendChild(toggleBtn);
+        // Ajusta padding-right do input para dar espaço ao botão
+        input.style.paddingRight = '45px';
+      }
+
+      // Aplicar toggle nos grupos de senha do login e do modal
+      const loginPasswordGroup = document.querySelector('#loginForm .input-group:has(input[type="password"])');
+      if (loginPasswordGroup) attachPasswordToggle(loginPasswordGroup);
+      // Para o modal, observe que o modal é adicionado posteriormente, mas os elementos já existem
+      const modalGroups = document.querySelectorAll('#forgotForm .input-group');
+      modalGroups.forEach(group => {
+        if (group.querySelector('input[type="password"]')) attachPasswordToggle(group);
+      });
+
+      // Para os campos do modal que serão desabilitados/habilitados, usar MutationObserver
+      const observer = new MutationObserver(() => {
+        const novaSenhaGroup = document.querySelector('#step2Content .input-group:has(#novaSenha)');
+        if (novaSenhaGroup && !novaSenhaGroup.querySelector('.toggle-password')) attachPasswordToggle(novaSenhaGroup);
+        const confirmaGroup = document.querySelector('#step2Content .input-group:has(#confirmaSenha)');
+        if (confirmaGroup && !confirmaGroup.querySelector('.toggle-password')) attachPasswordToggle(confirmaGroup);
+      });
+      observer.observe(document.getElementById('step2Content'), { childList: true, subtree: true });
+
+      // Elementos do login
+      const loginForm = document.getElementById('loginForm');
+      const errorAlert = document.getElementById('errorAlert');
+      const errorMessage = document.getElementById('errorMessage');
+      const btnLogin = document.getElementById('btnLogin');
+
+      // Elementos do modal
+      const forgotModal = document.getElementById('forgotModal');
+      const openForgot = document.getElementById('openForgot');
+      const closeForgot = document.getElementById('closeForgot');
+      const cancelForgot = document.getElementById('cancelForgot');
+      const forgotForm = document.getElementById('forgotForm');
+      const forgotMsg = document.getElementById('forgotMsg');
+      const btnForgot = document.getElementById('btnForgot');
+      const step1Content = document.getElementById('step1Content');
+      const step2Content = document.getElementById('step2Content');
+      const step1Indicator = document.getElementById('step1Indicator');
+      const step2Indicator = document.getElementById('step2Indicator');
+      const forgotUsuario = document.getElementById('forgotUsuario');
+      const palavraChave = document.getElementById('palavraChave');
+      const novaSenha = document.getElementById('novaSenha');
+      const confirmaSenha = document.getElementById('confirmaSenha');
+      let recoveryStep = 1;
+
+      function resetForgotModal() {
+        recoveryStep = 1;
+        forgotForm.reset();
+        forgotMsg.textContent = '';
+        forgotMsg.className = 'msg';
+        step1Content.classList.remove('hidden');
+        step2Content.classList.add('hidden');
+        step1Indicator.classList.add('active');
+        step2Indicator.classList.remove('active');
+        novaSenha.disabled = true;
+        confirmaSenha.disabled = true;
+        novaSenha.required = false;
+        confirmaSenha.required = false;
+        btnForgot.innerHTML = '<span>Continuar</span><i class="fas fa-arrow-right"></i>';
+      }
+
+      function goToStep2() {
+        recoveryStep = 2;
+        step1Content.classList.add('hidden');
+        step2Content.classList.remove('hidden');
+        step1Indicator.classList.remove('active');
+        step2Indicator.classList.add('active');
+        novaSenha.disabled = false;
+        confirmaSenha.disabled = false;
+        novaSenha.required = true;
+        confirmaSenha.required = true;
+        btnForgot.innerHTML = '<span>Salvar nova senha</span><i class="fas fa-check"></i>';
+        forgotMsg.textContent = 'Verificação aprovada. Defina sua nova senha.';
+        forgotMsg.className = 'msg success';
+        setTimeout(() => novaSenha.focus(), 100);
+        // Adicionar toggle nos novos campos se necessário
+        const novaGroup = document.querySelector('#step2Content .input-group:has(#novaSenha)');
+        if (novaGroup && !novaGroup.querySelector('.toggle-password')) attachPasswordToggle(novaGroup);
+        const confirmaGroup = document.querySelector('#step2Content .input-group:has(#confirmaSenha)');
+        if (confirmaGroup && !confirmaGroup.querySelector('.toggle-password')) attachPasswordToggle(confirmaGroup);
+      }
+
+      // Login
+      if (loginForm) {
+        loginForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const usuario = document.getElementById('usuario').value;
+          const senha = document.getElementById('senha').value;
+          if (!usuario || !senha) {
+            errorMessage.textContent = 'Preencha todos os campos';
+            errorAlert.style.display = 'flex';
+            loginForm.classList.add('shake');
+            setTimeout(() => loginForm.classList.remove('shake'), 400);
+            return;
+          }
+          const originalText = btnLogin.innerHTML;
+          btnLogin.innerHTML = '<span>Acessando</span><div class="loading"></div>';
+          btnLogin.disabled = true;
+          errorAlert.style.display = 'none';
+          try {
+            const formData = new FormData();
+            formData.append('usuario', usuario);
+            formData.append('senha', senha);
+            const response = await fetch('/login', { method: 'POST', body: formData });
+            if (response.redirected) {
+              window.location.href = response.url;
+              return;
+            }
+            const text = await response.text();
+            if (text.includes('erro=1')) {
+              errorMessage.textContent = 'Usuário ou senha incorretos';
+              errorAlert.style.display = 'flex';
+              loginForm.classList.add('shake');
+              setTimeout(() => loginForm.classList.remove('shake'), 400);
+            } else if (text.includes('erro=2')) {
+              errorMessage.textContent = 'Usuário desabilitado. Contate o administrador.';
+              errorAlert.style.display = 'flex';
+              loginForm.classList.add('shake');
+            } else {
+              errorMessage.textContent = 'Falha no login. Verifique suas credenciais.';
+              errorAlert.style.display = 'flex';
+            }
+          } catch {
+            errorMessage.textContent = 'Erro de conexão com o servidor. Tente novamente.';
+            errorAlert.style.display = 'flex';
+          } finally {
+            btnLogin.innerHTML = originalText;
+            btnLogin.disabled = false;
+          }
+        });
+      }
+
+      // Modal
+      if (openForgot) {
+        openForgot.addEventListener('click', (e) => {
+          e.preventDefault();
+          resetForgotModal();
+          forgotModal.classList.remove('hidden');
+          setTimeout(() => forgotUsuario?.focus(), 100);
+        });
+      }
+      function closeModal() { forgotModal.classList.add('hidden'); resetForgotModal(); }
+      if (closeForgot) closeForgot.addEventListener('click', closeModal);
+      if (cancelForgot) cancelForgot.addEventListener('click', closeModal);
+      forgotModal.addEventListener('click', (e) => { if (e.target === forgotModal) closeModal(); });
+
+      forgotForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (recoveryStep === 1) {
+          const usuario = forgotUsuario.value;
+          const palavra = palavraChave.value;
+          if (!usuario || !palavra) {
+            forgotMsg.textContent = 'Preencha todos os campos';
+            forgotMsg.className = 'msg error';
+            return;
+          }
+          forgotMsg.textContent = 'Verificando...';
+          forgotMsg.className = 'msg';
+          try {
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            goToStep2();
+          } catch {
+            forgotMsg.textContent = 'Erro de conexão. Tente novamente.';
+            forgotMsg.className = 'msg error';
+          }
+          return;
+        }
+        if (recoveryStep === 2) {
+          const nova = novaSenha.value;
+          const confirma = confirmaSenha.value;
+          if (!nova || !confirma) {
+            forgotMsg.textContent = 'Preencha todos os campos';
+            forgotMsg.className = 'msg error';
+            return;
+          }
+          if (nova.length < 4) {
+            forgotMsg.textContent = 'A senha deve ter no mínimo 4 caracteres';
+            forgotMsg.className = 'msg error';
+            return;
+          }
+          if (nova !== confirma) {
+            forgotMsg.textContent = 'As senhas não coincidem';
+            forgotMsg.className = 'msg error';
+            return;
+          }
+          forgotMsg.textContent = 'Atualizando senha...';
+          forgotMsg.className = 'msg';
+          try {
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            forgotMsg.textContent = 'Senha alterada com sucesso! Redirecionando...';
+            forgotMsg.className = 'msg success';
+            setTimeout(() => {
+              closeModal();
+              errorAlert.style.cssText = '';
+              errorAlert.style.background = 'rgba(34,197,94,0.07)';
+              errorAlert.style.borderColor = 'rgba(34,197,94,0.25)';
+              errorAlert.style.color = '#16a34a';
+              errorMessage.textContent = 'Senha alterada com sucesso! Faça login com sua nova senha.';
+              errorAlert.style.display = 'flex';
+              setTimeout(() => errorAlert.style.display = 'none', 5000);
+            }, 1500);
+          } catch {
+            forgotMsg.textContent = 'Erro ao atualizar senha. Tente novamente.';
+            forgotMsg.className = 'msg error';
+          }
+        }
+      });
+
+      // Link de ajuda
+      const helpLink = document.getElementById('helpLink');
+      if (helpLink) {
+        helpLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          errorAlert.style.cssText = '';
+          errorAlert.style.background = 'rgba(14,165,160,0.07)';
+          errorAlert.style.borderColor = 'rgba(14,165,160,0.25)';
+          errorAlert.style.color = 'var(--teal)';
+          errorMessage.textContent = 'Entre em contato com o administrador do sistema';
+          errorAlert.style.display = 'flex';
+          setTimeout(() => errorAlert.style.display = 'none', 4000);
+        });
+      }
+
+      // Clique na logo para reanimar
+      const logoSvg = document.querySelector('.logo-svg');
+      if (logoSvg) {
+        logoSvg.addEventListener('click', () => {
+          logoScreen.classList.remove('hidden');
+          const strokeEl = document.getElementById('stroke');
+          strokeEl.style.animation = 'none';
+          strokeEl.offsetHeight;
+          strokeEl.style.animation = 'drawStroke 2.8s cubic-bezier(0.2,0.6,0.4,1) forwards';
+          setTimeout(() => logoScreen.classList.add('hidden'), 4000);
+        });
+      }
+
+      // Alternar tema (dark/light)
+      function initTheme() {
+        const saved = localStorage.getItem('unisystem_theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const isDark = saved === 'dark' || (saved === null && prefersDark);
+        if (isDark) document.body.classList.add('dark');
+        const toggleBtn = document.getElementById('themeToggle');
+        if (toggleBtn) {
+          const icon = toggleBtn.querySelector('i');
+          icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+          toggleBtn.addEventListener('click', () => {
+            const nowDark = document.body.classList.toggle('dark');
+            localStorage.setItem('unisystem_theme', nowDark ? 'dark' : 'light');
+            icon.className = nowDark ? 'fas fa-sun' : 'fas fa-moon';
+          });
+        }
+      }
+      initTheme();
+    })();
+  </script>
+</body>
+</html>

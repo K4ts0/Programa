@@ -1,0 +1,119 @@
+Erro em /api/relatorios: no such column: s.produto_id
+Traceback (most recent call last):
+  File "c:\Users\Oprop\Desktop\programa\api_flask.py", line 525, in relatorios
+    top_produtos = db.execute('''
+                   ~~~~~~~~~~^^^^
+        SELECT
+        ^^^^^^
+    ...<10 lines>...
+        LIMIT 5
+        ^^^^^^^
+    ''').fetchall()
+    ^^^^
+sqlite3.OperationalError: no such column: s.produto_id
+Erro em /api/relatorios: no such column: s.produto_id
+Traceback (most recent call last):
+  File "c:\Users\Oprop\Desktop\programa\api_flask.py", line 525, in relatorios
+    top_produtos = db.execute('''
+                   ~~~~~~~~~~^^^^
+        SELECT
+        ^^^^^^
+    ...<10 lines>...
+        LIMIT 5
+        ^^^^^^^
+    ''').fetchall()
+    ^^^^
+sqlite3.OperationalError: no such column: s.produto_id
+Erro em /api/relatorios: no such column: s.produto_id
+Traceback (most recent call last):
+  File "c:\Users\Oprop\Desktop\programa\api_flask.py", line 525, in relatorios
+    top_produtos = db.execute('''
+                   ~~~~~~~~~~^^^^
+        SELECT
+        ^^^^^^
+    ...<10 lines>...
+        LIMIT 5
+        ^^^^^^^
+    ''').fetchall()
+    ^^^^
+sqlite3.OperationalError: no such column: s.produto_id
+Erro em /api/relatorios: no such column: s.produto_id
+Traceback (most recent call last):
+  File "c:\Users\Oprop\Desktop\programa\api_flask.py", line 525, in relatorios
+    top_produtos = db.execute('''
+                   ~~~~~~~~~~^^^^
+        SELECT
+        ^^^^^^
+    ...<10 lines>...
+        LIMIT 5
+        ^^^^^^^
+    ''').fetchall()
+    ^^^^
+sqlite3.OperationalError: no such column: s.produto_id
+Erro em /api/servicos: table servicos has no column named bairro_cliente
+Erro em /api/relatorios: no such column: s.produto_id
+Traceback (most recent call last):
+  File "c:\Users\Oprop\Desktop\programa\api_flask.py", line 525, in relatorios
+    top_produtos = db.execute('''
+                   ~~~~~~~~~~^^^^
+        SELECT
+        ^^^^^^
+    ...<10 lines>...
+        LIMIT 5
+        ^^^^^^^
+    ''').fetchall()
+    ^^^^
+sqlite3.OperationalError: no such column: s.produto_id
+Erro em /api/servicos: table servicos has no column named bairro_cliente
+Erro em /api/relatorios: no such column: s.produto_id
+Traceback (most recent call last):
+  File "c:\Users\Oprop\Desktop\programa\api_flask.py", line 525, in relatorios
+    top_produtos = db.execute('''
+                   ~~~~~~~~~~^^^^
+        SELECT
+        ^^^^^^
+    ...<10 lines>...
+        LIMIT 5
+        ^^^^^^^
+    ''').fetchall()
+    ^^^^
+sqlite3.OperationalError: no such column: s.produto_id
+Erro em /api/relatorios: no such column: s.produto_id
+Traceback (most recent call last):
+  File "c:\Users\Oprop\Desktop\programa\api_flask.py", line 525, in relatorios
+    top_produtos = db.execute('''
+                   ~~~~~~~~~~^^^^
+        SELECT
+        ^^^^^^
+    ...<10 lines>...
+        LIMIT 5
+        ^^^^^^^
+    ''').fetchall()
+    ^^^^
+sqlite3.OperationalError: no such column: s.produto_id
+Erro em /api/relatorios: no such column: s.produto_id
+Traceback (most recent call last):
+  File "c:\Users\Oprop\Desktop\programa\api_flask.py", line 525, in relatorios
+    top_produtos = db.execute('''
+                   ~~~~~~~~~~^^^^
+        SELECT
+        ^^^^^^
+    ...<10 lines>...
+        LIMIT 5
+        ^^^^^^^
+    ''').fetchall()
+    ^^^^
+sqlite3.OperationalError: no such column: s.produto_id
+Erro em /api/relatorios: no such column: s.produto_id
+Traceback (most recent call last):
+  File "c:\Users\Oprop\Desktop\programa\api_flask.py", line 525, in relatorios
+    top_produtos = db.execute('''
+                   ~~~~~~~~~~^^^^
+        SELECT
+        ^^^^^^
+    ...<10 lines>...
+        LIMIT 5
+        ^^^^^^^
+    ''').fetchall()
+    ^^^^
+sqlite3.OperationalError: no such column: s.produto_id

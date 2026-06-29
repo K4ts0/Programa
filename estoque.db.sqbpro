@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="estoque.db" readonly="0" foreign_keys="0" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="4038"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="atendimento_itens" custom_title="0" dock_id="1" table="4,17:mainatendimento_itens"/><dock_state state="000000ff00000000fd00000001000000020000000000000000fc0100000001fb000000160064006f0063006b00420072006f00770073006500310100000000ffffffff0000011800ffffff000000000000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1*">-- ===================================================================
+--  LIMPEZA COMPLETA DOS DADOS DE TESTE (mantém estrutura e configurações)
+-- ===================================================================
+-- ATENÇÃO: Este script apaga TODOS os registros das tabelas abaixo.
+-- Execute somente se tiver certeza.
+
+-- Desabilita temporariamente a verificação de chaves estrangeiras para evitar conflitos de ordem
+PRAGMA foreign_keys = OFF;
+
+-- 1. Tabelas com dependências (filhas)
+DELETE FROM atendimento_itens;
+DELETE FROM atendimento_servicos;
+DELETE FROM movimentacao_estoque;
+DELETE FROM compras;
+DELETE FROM notas_fiscais_itens;
+DELETE FROM notas_fiscais;
+DELETE FROM registro_exclusoes;
+DELETE FROM contas_pagar;
+DELETE FROM lancamentos_caixa;
+DELETE FROM servico_custos;
+
+-- 2. Tabelas principais (que são referenciadas)
+DELETE FROM atendimentos;
+DELETE FROM clientes;
+DELETE FROM produtos;
+DELETE FROM servicos;
+DELETE FROM fornecedores;
+
+-- 3. Se quiser também limpar outras auxiliares (opcional, mas mantém consistência)
+--    Comente as linhas abaixo se preferir manter algum desses dados
+DELETE FROM categorias_custo;      -- categorias de custo (se quiser reiniciar)
+-- DELETE FROM categorias;           -- categorias de produtos (descomente se quiser limpar também)
+
+-- Reabilita a verificação de chaves estrangeiras
+PRAGMA foreign_keys = ON;
+
+-- 4. Reinicia os contadores autoincrement de todas as tabelas que foram limpas
+UPDATE sqlite_sequence SET seq = 0 WHERE name IN (
+    'produtos', 'servicos', 'clientes', 'atendimentos',
+    'compras', 'movimentacao_estoque', 'notas_fiscais',
+    'notas_fiscais_itens', 'registro_exclusoes', 'fornecedores',
+    'contas_pagar', 'lancamentos_caixa', 'servico_custos',
+    'atendimento_itens', 'atendimento_servicos', 'categorias_custo'
+);
+
+-- Mensagem de confirmação (opcional, apenas para visualização no DB Browser)
+SELECT 'Limpeza concluída. Todas as tabelas transacionais foram zeradas.' AS status;</sql><current_tab id="0"/></tab_sql></sqlb_project>
